@@ -387,8 +387,8 @@ pipeline {
         GIT_SSH_COMMAND       = 'ssh -o StrictHostKeyChecking=accept-new'
       }
       steps {
-        unstash "src"
-        unstash "binary"
+        unstash 'src'
+        unstash 'binary'
         dir('bionic') { unstash 'bionic' }
         dir('buster') { unstash 'buster' }
         dir('arch')   { unstash 'arch'   }

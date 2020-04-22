@@ -369,15 +369,12 @@ pipeline {
       }
     }
     stage('Deploy') {
+      when { branch 'master' }
       agent {
         dockerfile {
           additionalBuildArgs '--build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g)'
           reuseNode true
         }
-      }
-      when {
-        branch 'master'
-        beforeAgent true
       }
       environment {
         AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')

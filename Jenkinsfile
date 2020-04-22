@@ -107,6 +107,7 @@ pipeline {
                         dir("kframework-${env.VERSION}") {
                           checkout scm
                           sh '''
+                            mv package/debian ./debian
                             mv debian/control.ubuntu debian/control
                             dpkg-buildpackage
                           '''
@@ -161,6 +162,7 @@ pipeline {
                         dir("kframework-${env.VERSION}") {
                           checkout scm
                           sh '''
+                            mv package/debian ./debian
                             mv debian/control.debian debian/control
                             dpkg-buildpackage
                           '''
@@ -214,7 +216,10 @@ pipeline {
                     stage('Build Pacman Package') {
                       steps {
                         checkout scm
-                        sh 'makepkg'
+                        sh '''
+                          mv package/arch/* ./
+                          makepkg
+                        '''
                         stash name: "arch", includes: "kframework-git-${env.VERSION}-1-x86_64.pkg.tar.xz"
                       }
                     }

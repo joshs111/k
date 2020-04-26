@@ -307,6 +307,7 @@ pipeline {
                         git show-ref --verify refs/remotes/origin/$brew_base_branch
                         git push -d origin brew-release-$PACKAGE || true
                         git checkout -b brew-release-$PACKAGE "origin/$brew_base_branch"
+                        git merge origin/master
                         ${WORKSPACE}/package/macos/brew-update-to-local
                         git commit Formula/$PACKAGE.rb -m "Update $PACKAGE to ${SHORT_REV}: part 1"
                         ${WORKSPACE}/package/macos/brew-build-and-update-to-local-bottle ${SHORT_REV}
